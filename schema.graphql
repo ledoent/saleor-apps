@@ -1681,6 +1681,13 @@ type Webhook implements Node @doc(category: "Webhooks") {
   """The name of webhook."""
   name: String
 
+  """
+  The unique identifier of the webhook, set by the app. Unique per app, null when not set.
+  
+  Added in Saleor 3.23.
+  """
+  identifier: String
+
   """List of webhook events."""
   events: [WebhookEvent!]! @deprecated(reason: "Use `asyncEvents` or `syncEvents` instead.")
 
@@ -15145,6 +15152,13 @@ type Shop implements ObjectWithMetadata {
   """
   trackInventoryByDefault: Boolean
 
+  """
+  Determines whether the GraphQL API accepts storefront requests (anonymous requests and authenticated non-staff customers). When disabled, only apps and staff users may call the API directly; all other requests are rejected with an HTTP 401 and the `STOREFRONT_TRAFFIC_NOT_ALLOWED` error code.
+  
+  Added in Saleor 3.23.
+  """
+  allowStorefrontTraffic: Boolean!
+
   """Default weight unit."""
   defaultWeightUnit: WeightUnitsEnum
 
@@ -15266,6 +15280,11 @@ type Shop implements ObjectWithMetadata {
   Added in Saleor 3.23.
   """
   useLegacyShippingZoneStockAvailability: Boolean!
+
+  """
+  Controls the method used for merging existing orders and giftcards when password-based authentication is used. Learn more at https://docs.saleor.io/upgrade-guides/core/migrate-account-merging
+  """
+  accountConfirmMergeMode: AccountConfirmModeEnum!
 
   """
   Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
@@ -15411,6 +15430,25 @@ enum PasswordLoginModeEnum @doc(category: "Authentication") {
   ENABLED
   CUSTOMERS_ONLY
   DISABLED
+}
+
+"""
+AccountConfirmMode set the account merging mode for anonymous objects.
+
+    This dictates the behavior of the `confirmAccount()` mutation for
+    password-based authentication when attempting to merge orders & giftcard
+    that aren't associated to a user account.
+
+    Modes:
+
+    - MERGE_DISABLED disables merging only when the authentication method
+      is password (i.e., when not using OIDC)
+    - REQUIRE_PASSWORD enables account merging who accounts that use password
+      authentication but it requires the user to enter their password
+"""
+enum AccountConfirmModeEnum @doc(category: "Authentication") {
+  MERGE_DISABLED
+  REQUIRE_PASSWORD
 }
 
 """Gift card related settings from site settings."""
@@ -21967,6 +22005,11 @@ type Mutation {
     """E-mail of the user performing account confirmation."""
     email: String!
 
+    """
+    Password of the user confirming their account. Required when `REQUIRED_PASSWORD` mode is enabled in shop settings. Learn more at https://docs.saleor.io/upgrade-guides/core/migrate-account-merging
+    """
+    password: String
+
     """A one-time token required to confirm the account."""
     token: String!
   ): ConfirmAccount @doc(category: "Users") @webhookEventsInfo(asyncEvents: [ACCOUNT_CONFIRMED], syncEvents: [])
@@ -22501,6 +22544,13 @@ input WebhookCreateInput @doc(category: "Webhooks") {
   """The name of the webhook."""
   name: String
 
+  """
+  The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters.
+  
+  Added in Saleor 3.23.
+  """
+  identifier: String
+
   """The url to receive the payload."""
   targetUrl: String
 
@@ -22556,6 +22606,13 @@ type WebhookUpdate @doc(category: "Webhooks") {
 input WebhookUpdateInput @doc(category: "Webhooks") {
   """The new name of the webhook."""
   name: String
+
+  """
+  The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters. Pass a blank value to clear it.
+  
+  Added in Saleor 3.23.
+  """
+  identifier: String
 
   """The url to receive the payload."""
   targetUrl: String
@@ -23385,6 +23442,13 @@ input ShopSettingsInput {
   allowLoginWithoutConfirmation: Boolean
 
   """
+  Determines whether the GraphQL API accepts storefront requests (anonymous requests and authenticated non-staff customers). When disabled, only apps and staff users may call the API directly; all other requests are rejected with an HTTP 401 and the `STOREFRONT_TRAFFIC_NOT_ALLOWED` error code.
+  
+  Added in Saleor 3.23.
+  """
+  allowStorefrontTraffic: Boolean
+
+  """
   Shop public metadata. Can be read by any API client authorized to read the object it's attached to.
   
   Warning: never store sensitive information, including financial data such as credit card details.
@@ -23434,6 +23498,11 @@ input ShopSettingsInput {
   Added in Saleor 3.22.
   """
   useLegacyUpdateWebhookEmission: Boolean @deprecated
+
+  """
+  Controls the method used for merging existing orders and giftcards when password-based authentication is used. Learn more at https://docs.saleor.io/upgrade-guides/core/migrate-account-merging
+  """
+  accountConfirmMergeMode: AccountConfirmModeEnum
 }
 
 """
@@ -32623,6 +32692,7 @@ enum AppErrorCode @doc(category: "Apps") {
   INVALID_MANIFEST_FORMAT
   INVALID_CUSTOM_HEADERS
   DUPLICATED_EXTENSION_IDENTIFIER
+  DUPLICATED_WEBHOOK_IDENTIFIER
   MANIFEST_URL_CANT_CONNECT
   NOT_FOUND
   REQUIRED
