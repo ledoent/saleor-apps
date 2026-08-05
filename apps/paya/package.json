@@ -1,0 +1,25 @@
+{
+  "name": "saleor-app-payment-paya",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "pnpm generate && next build",
+    "check-types": "tsc --noEmit",
+    "dev": "next dev",
+    "generate": "graphql-codegen",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@saleor/app-sdk": "link:../../node_modules/@saleor/app-sdk",
+    "@saleor/apps-logger": "workspace:*",
+    "@saleor/apps-shared": "workspace:*",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
