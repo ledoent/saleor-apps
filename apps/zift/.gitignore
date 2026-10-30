@@ -1,0 +1,9 @@
+node_modules
+.next
+tsconfig.tsbuildinfo
+.env
+.env.*
+# The one exception, and the point of the pattern above: a checked-in template
+# so nobody has to guess the variable names, while every file that could hold a
+# real credential stays out.
+!.env.example

@@ -1,0 +1,35 @@
+Saleor Payment App — Zift
+Copyright 2026 Ledo Enterprises LLC
+
+This product includes software developed by Ledo Enterprises LLC
+(https://ledoweb.com).
+
+Licensed under the Apache License, Version 2.0. See the LICENSE file for the
+full terms.
+
+Origin
+------
+
+Written by Ledo Enterprises LLC for Measurement Instruments (the DuroPC
+industrial-computer store), whose requirements shaped it: invoice-based selling,
+charge-on-ship rather than charge-at-checkout, commercial and purchasing cards,
+and ACH as the preferred settlement method.
+
+Trademarks
+----------
+
+Zift, Saleor, Measurement Instruments and DuroPC are the marks of their
+respective owners, used here only to identify the systems this software
+integrates with. This repository is not endorsed by or affiliated with Zift or
+Saleor. Dependencies retain their own licenses; see package.json.
+
+Scope of the documentation
+--------------------------
+
+This software is provided "AS IS", without warranties or conditions of any
+kind, as stated in Section 7 of the License.
+
+The README discusses PCI SAQ scope and NACHA's account-validation rule as
+engineering context for implementers. It is not an assessment and not
+compliance advice; no part of this work has been reviewed by a Qualified
+Security Assessor.
