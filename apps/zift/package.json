@@ -1,0 +1,53 @@
+{
+  "name": "saleor-app-payment-zift",
+  "version": "0.2.0",
+  "description": "Saleor Payment App for the Zift gateway: stored cards with Level II/III data, and ACH bank debits.",
+  "license": "Apache-2.0",
+  "author": "Ledo Enterprises LLC (https://ledoweb.com)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ledoent/saleor-apps.git",
+    "directory": "apps/zift"
+  },
+  "keywords": [
+    "saleor",
+    "saleor-app",
+    "payments",
+    "zift",
+    "ach",
+    "level3"
+  ],
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "check-types": "tsc --noEmit",
+    "dev": "next dev -p 3005",
+    "drizzle:generate": "drizzle-kit generate",
+    "migrate": "tsx src/db/migrate.ts",
+    "smoke": "tsx --env-file-if-exists=.env scripts/sandbox-smoke.ts",
+    "start": "next start -p 3005",
+    "test": "vitest run",
+    "test:ci": "vitest run"
+  },
+  "dependencies": {
+    "@saleor/app-sdk": "catalog:",
+    "drizzle-orm": "^0.39.0",
+    "graphql": "catalog:",
+    "next": "catalog:",
+    "pg": "^8.13.0",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@types/pg": "^8.11.0",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "drizzle-kit": "^0.30.0",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
