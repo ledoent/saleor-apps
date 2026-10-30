@@ -32,22 +32,22 @@
   },
   "dependencies": {
     "@saleor/app-sdk": "catalog:",
+    "drizzle-orm": "^0.39.0",
     "graphql": "catalog:",
     "next": "catalog:",
+    "pg": "^8.13.0",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "zod": "catalog:",
-    "drizzle-orm": "^0.39.0",
-    "pg": "^8.13.0"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",
+    "@types/pg": "^8.11.0",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "typescript": "catalog:",
-    "vitest": "catalog:",
     "drizzle-kit": "^0.30.0",
     "tsx": "catalog:",
-    "@types/pg": "^8.11.0"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }
